@@ -8,12 +8,15 @@ Magento Test
  * @Phone: +92-345-4128462
  * @copyright : April 2020 All rights reserved
 
+ 
+ 
  profiles: 
 
  https://www.linkedin.com/in/ashfaq-ahmed-2930584b/?originalSubdomain=pk
+
  https://www.rozee.pk/people/6611536/ashfaq.ahmed
- https://rocketreach.co/ashfaq-ahmed-email_9579180
  
+ https://rocketreach.co/ashfaq-ahmed-email_9579180
 
 Packages are as follow
 ----------------------------------------------------------------------------------------------------------
