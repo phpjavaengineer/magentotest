@@ -10,14 +10,10 @@ Magento Test
 
 Packages are as follow
 ----------------------------------------------------------------------------------------------------------
--Ascripts/Linelogin
 -Ascripts/Testcode
--Ascripts/Testlogs
 
 
 
-    1- Load a customer, change the name and save again. Test using a
-Controller. (DONE)
 
     2- Create a new page that renders a string using a view model.
 
@@ -38,15 +34,6 @@ Controller. (DONE)
 (DONE)
 
 
-
-5- As you know in Magento we can login using Facebook, twitter etc.
-
-    • So our requirement is to login using line (https://line.me/en/). 
-    • Search the API provided by LINE then implement a module through which user can register or login to Magento (https://developers.line.biz/en/)
-    • As you know magento needs email and password to login, so if email id cannot be retrieve, please add an intermediate step to get those information from user. 
-Also it must be a separate module.
-
-(DONE)
 
 
 
