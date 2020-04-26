@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+     * @Package Module: Ascripts_Testcode
+     * @Author: Ashfaq Ahmed
+     * @Email: phpjavaengineer@gmail.com
+     * @Phone: +92-345-4128462
+     * @copyright : April 2020
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <body>
+        <referenceBlock name="header.links">
+            <block class="Ascripts\Testcode\Block\Main\TestLinks" name="add-new-header-test-link">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">Render View Model</argument>
+                    <argument name="path" xsi:type="string" translate="true">testcode/index/viewmodelrand/</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

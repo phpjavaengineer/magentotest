@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    /**
+        * @Package Module: Ascripts_Linelogin
+        * @Author: Ashfaq Ahmed
+        * @Email: phpjavaengineer@gmail.com
+        * @Phone: +92-345-4128462
+        * @copyright : April 2020
+        */
+    -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Magento/Framework/ObjectManager/etc/config.xsd">
+
+    <!--adding Logger handler-->
+    <type name="Ascripts\Linelogin\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <!--adding Logger handlers-->
+    <type name="Ascripts\Linelogin\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">Linelogin</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Ascripts\Linelogin\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    <!--adding respoitory interface for adding Line login buisness logic-->
+    <preference for="Ascripts\Linelogin\Api\LineRepositoryInterface" type="Ascripts\Linelogin\Model\LineRepositoryModel" />
+
+
+</config>

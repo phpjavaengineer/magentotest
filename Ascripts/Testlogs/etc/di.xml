@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    /**
+     * @Package Module: Ascripts_Testlogs
+     * @Author: Ashfaq Ahmed
+     * @Email: phpjavaengineer@gmail.com
+     * @Phone: +92-345-4128462
+     * @copyright : April 2020
+     */
+    -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Magento/Framework/ObjectManager/etc/config.xsd">
+
+    <!-- writing own logs with handler -->
+    <type name="Ascripts\Testlogs\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <!-- Logger Handler defining with class -->
+    <type name="Ascripts\Testlogs\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">TestLogger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Ascripts\Testlogs\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!--Router List for Logs-->
+
+    <type name="Magento\Framework\App\RouterList">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="testrouter" xsi:type="array">
+                    <item name="class" xsi:type="string">Ascripts\Testlogs\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">1</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+
+</config>

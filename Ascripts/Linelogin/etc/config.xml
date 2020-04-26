@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--    /**
+        * @Package Module: Ascripts_Linelogin
+        * @Author: Ashfaq Ahmed
+        * @Email: phpjavaengineer@gmail.com
+        * @Phone: +92-345-4128462
+        * @copyright : April 2020
+        */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <ascripts_linelogin>
+            <general>
+                <enabled>1</enabled>
+            </general>
+            <line>0</line>
+            <facebook>
+                <enabled>0</enabled>
+            </facebook>
+            <google>
+                <enabled>0</enabled>
+            </google>
+        </ascripts_linelogin>
+    </default>
+</config>

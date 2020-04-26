@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @Package Module: Ascripts_Testlogs
+ * @Author: Ashfaq Ahmed
+ * @Email: phpjavaengineer@gmail.com
+ * @Phone: +92-345-4128462
+ * @copyright : April 2020
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Ascripts_Testlogs" setup_version="1.0.0">
+    </module>
+</config>

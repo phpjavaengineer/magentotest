@@ -1,0 +1,229 @@
+<?php
+/**
+ * @Package Module: Ascripts_Linelogin
+ * @Author: Ashfaq Ahmed
+ * @Email: phpjavaengineer@gmail.com
+ * @Phone: +92-345-4128462
+ * @copyright : April 2020
+ */
+
+/** @var  $processUrl */
+$processLoginStartUrl = $block->getUrl('linelogin/social/startlogin');
+$csrf = $block->getFormKey();
+
+$lineLink = $block->getLineLoginLink();
+
+?>
+
+<?php if (!$block->isUserLoggedIn()): ?>
+    <?php if ($block->isLineEnabled()): ?>
+        <script>
+            /** acquiring the JQuery including in .pthml, I were wanting to include JS via stndard way and
+             * this feature via Knockout JS
+             * and HTML Tmplates, but becuase of low time and too much work I used this short method.
+             * */
+
+            require(
+                [
+                    'jquery',
+                    'jquery/ui'
+                ], function ($) {
+
+                    $(document).ready(function () {
+                        $('.social_button_line').click(function () {
+                            /*** showing panel */
+                            $('#mainLoginContainer').show();
+
+                            return false;
+
+
+                        });
+                        $('#line_login_button').click(function () {
+
+                            /** feching customer variables and  email */
+                            var client_email = $('#client_email');
+                            var responsePanel = $('#resultPanel');
+                            var resp_messages = $('#resp_messages');
+
+                        /** validatinog email beore submit */
+                        client_email.on("focus", function(){
+                            $("#line_login_button").attr("disabled", false);
+                            resp_messages.hide();
+                        });
+                        /** on click checking email **/
+                            $("#line_login_button").on("click", function(){
+                                var email = client_email.val();
+                                var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                                if (!filter.test(email) || !email) {
+                                    resp_messages.html('<span style="color:red">Invalid Email Address</span>');
+                                    $("#line_login_button").attr("disabled", true);
+                                    return false;
+                                } else {
+                                    $("#line_login_button").attr("disabled", false);
+
+                                }
+                            });
+
+
+                            /*** saving customer email in session */
+                            $.ajax('<?php echo $processLoginStartUrl;?>', {
+                                type: 'POST',  // http method
+                                data: {
+                                    client_email: client_email.val(),
+                                    csrf: '<?php echo $csrf;?>'
+                                },
+                                beforeSend: function (req) {
+                                    resp_messages.html('<span style="color:red">Connecting to Line Messenger Please wait...</span>');
+                                    resp_messages.show();
+                                },
+                                success: function (data, status, xhr) {
+                                    // console.log(data);
+                                    $('#mainLoginContainer').hide();
+                                    var url = '<?php echo $lineLink;?>';
+                                    /** opening new window for loing */
+                                    var remotLineLogin = popupWindow(url, 'Line Remote Login', window, 500, 500);
+                                    resp_messages.hide();
+
+                                    return false;
+
+                                },
+                                error: function (jqXhr, textStatus, errorMessage) {
+                                    //  console.log(errorMessage);
+                                    resp_messages.html('<span style="color:red">Error occured during login to Line messenger...</span>');
+                                    resp_messages.show();
+                                }
+                            });
+                        });
+
+                    });
+
+                    /**
+                     *
+                     * @param url
+                     * @param title
+                     * @param win
+                     * @param w
+                     * @param h
+                     * @returns {*}
+                     */
+                    function popupWindow(url, title, win, w, h) {
+                        const y = win.top.outerHeight / 2 + win.top.screenY - (h / 2);
+                        const x = win.top.outerWidth / 2 + win.top.screenX - (w / 2);
+                        return win.open(url, title, `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${y}, left=${x}`);
+                    }
+
+                });
+
+        </script>
+    <?php endif; ?>
+    <div id="mainLoginContainer" class="main-login-container">
+        <div class="main-panel">
+            <h3 class="line-login-heading"><?php echo __('Line Social Login'); ?></h3>
+            <span id="closePanel" class="close-panel" onclick="closePanel(this)">X</span>
+            <div id="resultPanel" class="result-panel">
+                <input name="csrf" type="hidden" value="<?php echo $csrf ?>"/>
+                <div class="paragraph"><?php echo __('You must provide your email to login with line, please provide your email id and click on Login button'); ?>
+            </div>
+            <br/>
+            <label>Your Email: <input class="client-email" id="client_email" type="text" placeholder="abc@gmail.com" name="client_email"/></label>
+            <br/>
+            <div id="resp_messages" class="resp-messages"></div>
+            <div class="buttons_panel">
+                <button class="action-buttons" id="line_login_button" type="button"><?php echo __('login to Line'); ?></button>
+                <button class="action-buttons" onclick="closePanel(this)" id="cancel_login_button"
+                        type="button"><?php echo __('Cancel'); ?></button>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+    <?php if ($block->isLineEnabled()): ?>
+        <script>
+            /*** close Panel **/
+            function closePanel(obj) {
+                jQuery('#mainLoginContainer').hide();
+            }
+
+        </script>
+    <?php endif; ?>
+<?php endif; ?>
+<style>
+    .main-login-container {
+        opacity: .95;
+        display: none;
+        width: 100%;
+        z-index: 999999;
+        min-height: 800px;
+        height: auto;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background-color: #ccc;
+    }
+
+    .client-email {
+        width: 60% !important;
+    }
+
+    .resp-messages{
+        color:#ff000;
+        padding: 4px 4px;
+    }
+
+    .buttons_panel{
+        margin-top:15px;
+        margin-left:15px;
+        margin-right:50px;
+        clear:both;
+        float: right;
+    }
+.paragraph{
+    padding: 10px 10px;
+}
+    .main-panel {
+        background-color: #fff;
+        opacity: 1;
+        z-index: 9999999;
+        min-width: 400px;
+        width: 30%;
+        height: 300px;
+        position: fixed;
+        top: 20%;
+        left: 30%;
+        border: 12px outset #888888;
+        box-shadow: #00b300;
+    }
+
+    .line-login-heading {
+        padding: 5px 5px;
+        float: left;
+        padding-left: 15px;
+    }
+
+    .close-panel {
+        border: 1px solid #ff0000;
+        color: #ff0000;
+        padding-left: 4px;
+        padding-right: 4px;
+        float: right;
+        margin-right: 10px;
+        margin-top: 5px;
+        cursor: pointer;
+    }
+
+    .close-panel:hover {
+        background-color: #ff0000;
+        color: #fff;
+    }
+
+    .result-panel {
+        width: 100%;
+        height: auto;
+        min-height: 300px;
+        clear: both;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+</style>

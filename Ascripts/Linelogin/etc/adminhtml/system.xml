@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!--    /**
+        * @Package Module: Ascripts_Linelogin
+        * @Author: Ashfaq Ahmed
+        * @Email: phpjavaengineer@gmail.com
+        * @Phone: +92-345-4128462
+        * @copyright : April 2020
+        */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="ascripts_linelogin" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Line Social Login</label>
+            <tab>customer</tab>
+            <resource>Ascripts_Linelogin::configuration</resource>
+            <group id="general" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="line" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Line Login API</label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="api_channel_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Line Channel ID</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="api_channel_secret" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1">
+                    <label>Line App Channel Secret</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="api_assertion_key" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1">
+                    <label>Line App Assertion Signing Key</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="api_user_id" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1">
+                    <label>Line App User Id</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="api_callback_url" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1">
+                    <label>Line App Callback URL</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="api_auth_url" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1">
+                    <label>Line App Auth URL</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="api_profile_url" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1">
+                    <label>Line App Profile URL</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="api_provoke_url" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1">
+                    <label>Line App Provoke URL</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="api_token_url" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1">
+                    <label>Line App Token URL</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="api_verifytoken_url" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1">
+                    <label>Line App Verify Token URL</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+
+            </group>
+            </section>
+    </system>
+</config>

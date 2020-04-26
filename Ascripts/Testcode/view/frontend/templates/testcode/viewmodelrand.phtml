@@ -1,0 +1,27 @@
+<?php
+/**
+ * @Package Module: Ascripts_Testcode
+ * @Author: Ashfaq Ahmed
+ * @Email: phpjavaengineer@gmail.com
+ * @Phone: +92-345-4128462
+ * @copyright : April 2020
+ */
+/** Block: Ascripts_Testcode::ViewModelRand */
+$viewModel = $block->getViewModel();
+?>
+<h2>Test Tasks</h2>
+<ul><li><a href="<?=$block->getUrl('testcode/index/viewmodelrand/');?>">Render View Model</li><li><a href="<?=$block->getUrl('testcode/index/savecustomer/');?>">Save Customer</a> </li></ul>
+<h3 style="font-weight: bold;color:green">Task # 2: Create a new page that renders a string using a view model.</h3>
+<h4>Author: Ashfaq Ahmed</h4>
+<hr/>
+<h4>Rendering getter from View Model</h4>
+<ul>
+    <li> Create a getter in the view model.</li>
+    <li> Create a template for this block, and access the getter in it.</li>
+    <li> Display the text in content container using layout</li>
+</ul>
+<hr/>
+<h2>View Model Used to Render </h2>
+<?= $viewModel->getStringFromViewModel(); ?>
+<h4>Rendering getter from Block</h4>
+<?= $block->getStringFromBlock(); ?>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--    /**
+        * @Package Module: Ascripts_Linelogin
+        * @Author: Ashfaq Ahmed
+        * @Email: phpjavaengineer@gmail.com
+        * @Phone: +92-345-4128462
+        * @copyright : April 2020
+        */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<css src="Ascripts_Linelogin::css/font-awesome.min.css" />
+		<css src="Ascripts_Linelogin::css/buttonstyles.css" />
+	</head>
+    <body>
+    	<referenceContainer name="content">
+    		<block class="Ascripts\Linelogin\Block\Frontend\SocialLogin" name="social.options" as="social_options" before="customer_form_register" template="Ascripts_Linelogin::login/registerbuttons.phtml" cacheable="false"  />
+    	</referenceContainer>
+        <referenceContainer name="before.body.end">
+            <block class="Ascripts\Linelogin\Block\Frontend\SocialLogin" name="social_login" template="Ascripts_Linelogin::login/scripts.phtml" cacheable="false"  />
+        </referenceContainer>
+    </body>
+</page>

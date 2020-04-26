@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @Package Module: Ascripts_Testlogs
+ * @Author: Ashfaq Ahmed
+ * @Email: phpjavaengineer@gmail.com
+ * @Phone: +92-345-4128462
+ * @copyright : April 2020
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+<!--      <event name="layout_load_before">-->
+<!--        <observer name="ascripts_testlogs" instance="Ascripts\Testlogs\Observer\Router" />-->
+<!--    </event>-->
+    <event name="controller_action_predispatch">
+        <observer name="ascripts_testlogs" instance="Ascripts\Testlogs\Observer\Router" />
+    </event>
+
+
+</config>

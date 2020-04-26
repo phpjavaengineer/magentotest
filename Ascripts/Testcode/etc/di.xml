@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    /**
+     * @Package Module: Ascripts_Testcode
+     * @Author: Ashfaq Ahmed
+     * @Email: phpjavaengineer@gmail.com
+     * @Phone: +92-345-4128462
+     * @copyright : April 2020
+     */
+    -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Ascripts\Testcode\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Ascripts\Testcode\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">TestLogger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Ascripts\Testcode\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+
+</config>

@@ -1,0 +1,27 @@
+{
+
+            "name": "ascripts/testlogs",
+            "description": "Magento 2 testing module for pre join Logs Routers",
+            "type": "magento2-module",
+            "version": "1.0.0",
+            "authors": [
+                {
+                    "name": "Ashfaq Ahmed",
+                    "email": "phpjavaengineer@gmail.com"
+                }
+            ],
+            "license": [
+                "OSL-3.0"
+            ],
+            "require": {
+
+            },
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Ascripts\\Testlogs\\": ""
+                }
+            }
+}
