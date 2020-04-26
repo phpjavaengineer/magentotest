@@ -117,6 +117,8 @@ class SaveCustomer extends Action
         /** @var loaded a customer by its ID $customer */
         $customer = $this->loadCustomer($this->_customerId);
 
+        $params = $this->getRequest()->getParams();
+
         /** @var  $totalCustomers  getting total customers */
         $totalCustomers = count($this->getCustomers());
 
@@ -131,6 +133,16 @@ class SaveCustomer extends Action
         $str .= __('<center><h2 style="font-weight: bold;color:green">Task # 1: Renaming Customer via Controller</h2><h4>Author: ' . self::AUTHOR . '</h4><hr/></center>');
         $str .= __('<h3 style="font-weight: bold;color:red">1- Load a customer, change the name and save again. Test using a Controller. </h3>');
         $str .= __('<p>Total Customer: <b>(' . $totalCustomers . ')</b></p>');
+
+        $firstName = isset($params['first_name']) ? $params['first_name'] : '';
+        $lastName = isset($params['last_name']) ? $params['last_name'] : '';
+
+        $str .= __('<form action="' . $baseUrl . 'testcode/index/savecustomer/" enctype="application/x-www-form-urlencoded" method="get" >');
+        $str .= __('<input type="text" placeholder="First Name" value="' . $firstName . '" name="first_name" />');
+        $str .= __('<input type="text" placeholder="Last Name" value="' . $lastName . '"  name="last_name" />');
+        $str .= __('<button type="submit" >Change Customer Name</button>');
+        $str .= __('</form>');
+
         $str .= __('<p>Before Saving Customer Name</p>');
         $str .= __('<h4>Customer Name: ' . $customer->getName() . '</h4>');
         $str .= __('<p>After Saving Customer Name</p>');
@@ -139,8 +151,15 @@ class SaveCustomer extends Action
         $currentCustomer = $this->_customerRepository->getById($this->_customerId);
 
         /** new parameters */
-        $customerNewFirstName = 'Sameen';
-        $customerNewLastName = 'Iqbal';
+        $customerNewFirstName = 'Ashfaq';
+        $customerNewLastName = 'Ahmed';
+        if ($firstName) {
+            $customerNewFirstName = $firstName;
+        }
+        if ($lastName) {
+            $customerNewLastName = $lastName;
+        }
+
         $currentCustomer->setFirstname($customerNewFirstName);
         $currentCustomer->setLastname($customerNewLastName);
 
