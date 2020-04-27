@@ -203,22 +203,15 @@ class ProcessLogin extends Action
             // Get Website ID
             $websiteId = $this->_storeManager->getWebsite()->getWebsiteId();
             // Instantiate object (this is the most important part)
-            $customer = $this->_customerInterfaceFactory->create();
+            $customer = $this->_customerInterfaceFactory;
             $customer->setWebsiteId($websiteId);
-            $customer->addData(
-                [
-                    //    'email', $lineData['client_email']
-
-                ]
-            );
-
             $email = $lineData['client_email'];
 
             $customer->setEmail($email);
 
             $customer->setFirstName($firstName);
             $customer->setLastName($lastName);
-            $customer->setPassword($password);
+          //  $customer->setPassword($password);
 
             try {
                 // Save data
