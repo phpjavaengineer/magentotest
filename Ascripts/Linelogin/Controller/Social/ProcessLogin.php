@@ -12,6 +12,7 @@ namespace Ascripts\Linelogin\Controller\Social;
 use Ascripts\Linelogin\Logger\Logger;
 use Ascripts\Linelogin\Model\LineRepositoryModel;
 use Exception;
+use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Customer\Model\Account\Redirect as AccountRedirect;
 use Magento\Customer\Model\CustomerFactory;
 use Magento\Customer\Model\ResourceModel\Customer\CollectionFactory;
@@ -23,6 +24,7 @@ use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Forward;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Framework\Escaper;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\LocalizedException;
@@ -30,7 +32,6 @@ use Magento\Framework\Exception\StateException;
 use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
 use Magento\Framework\Stdlib\Cookie\FailureToSendException;
 use Magento\Framework\Stdlib\Cookie\PhpCookieManager;
-use Magento\Framework\View\Result\Layout;
 use Magento\Store\Model\StoreManagerInterface;
 
 class ProcessLogin extends Action
@@ -76,6 +77,14 @@ class ProcessLogin extends Action
      * @var $_cookieMetadataManager
      */
     private $_cookieMetadataManager;
+    /**
+     * @var CustomerRepositoryInterface 
+     */
+    private $_customerRepository;
+    /**
+     * @var EncryptorInterface 
+     */
+    private $_encryptor;
 
     /**
      * ProcessLogin constructor.
@@ -100,7 +109,9 @@ class ProcessLogin extends Action
         PhpCookieManager $phpCookieManager,
         CookieMetadataFactory $cookieMetadataFactory,
         Logger $logger,
-        LineRepositoryModel $lineRepositoryModel
+        LineRepositoryModel $lineRepositoryModel,
+        CustomerRepositoryInterface $customerRepository,
+        EncryptorInterface $encryptor
     ) {
         $this->_logger = $logger;
         $this->_storeManager = $storeManager;
@@ -113,6 +124,8 @@ class ProcessLogin extends Action
         $this->_cookieMetadataManager = $phpCookieManager;
         $this->_cookieMetadataFactory = $cookieMetadataFactory;
         $this->_lineRepositoryModel = $lineRepositoryModel;
+        $this->_customerRepository = $customerRepository;
+        $this->_encryptor = $encryptor;
 
         /** parent construct method */
         parent::__construct($context);
@@ -179,7 +192,7 @@ class ProcessLogin extends Action
                 }
             }
             //Generating random password
-            $password = bin2hex(openssl_random_pseudo_bytes(4));
+            $password = bin2hex(openssl_random_pseudo_bytes(10));
             // Get Website ID
             $websiteId = $this->_storeManager->getWebsite()->getWebsiteId();
             // Instantiate object (this is the most important part)
@@ -187,17 +200,25 @@ class ProcessLogin extends Action
             $customer->setWebsiteId($websiteId);
             $customer->addData(
                 [
-                    'email', $lineData['client_email']
+                    //    'email', $lineData['client_email']
 
                 ]
             );
+
+            $email = $lineData['client_email'];
+
+            $customer->setEmail($email);
+
             $customer->setFirstName($firstName);
             $customer->setLastName($lastName);
             $customer->setPassword($password);
 
             try {
                 // Save data
-                $customer->save();
+
+                $passwordHash = $this->_encrypter->getHash($password, true);
+                $this->_customerRepository->save($customer, $passwordHash);
+
                 $this->_eventManager->dispatch(
                     'customer_register_success',
                     ['account_controller' => $this, 'customer' => $customer]
@@ -287,6 +308,4 @@ class ProcessLogin extends Action
     {
         return $this->_scopeConfig;
     }
-
-
 }
