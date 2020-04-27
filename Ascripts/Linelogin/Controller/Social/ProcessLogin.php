@@ -78,11 +78,11 @@ class ProcessLogin extends Action
      */
     private $_cookieMetadataManager;
     /**
-     * @var CustomerRepositoryInterface 
+     * @var CustomerRepositoryInterface
      */
     private $_customerRepository;
     /**
-     * @var EncryptorInterface 
+     * @var EncryptorInterface
      */
     private $_encryptor;
 
@@ -218,6 +218,13 @@ class ProcessLogin extends Action
 
                 $passwordHash = $this->_encrypter->getHash($password, true);
                 $this->_customerRepository->save($customer, $passwordHash);
+
+                $search = $this->_customersCollection->create()
+                    ->addAttributeToSelect('*')
+                    ->addAttributeToFilter('email', $lineData['client_email'])
+                    ->getFirstItem();
+                $customer_id = (int)$search->getId();
+                $customer = $this->_customerFactory->create()->load($customer_id);
 
                 $this->_eventManager->dispatch(
                     'customer_register_success',
