@@ -85,6 +85,10 @@ class ProcessLogin extends Action
      * @var EncryptorInterface
      */
     private $_encryptor;
+    /**
+     * @var CustomerFactory
+     */
+    private $_customerInterfaceFactory;
 
     /**
      * ProcessLogin constructor.
@@ -111,7 +115,8 @@ class ProcessLogin extends Action
         Logger $logger,
         LineRepositoryModel $lineRepositoryModel,
         CustomerRepositoryInterface $customerRepository,
-        EncryptorInterface $encryptor
+        EncryptorInterface $encryptor,
+        CustomerFactory $customerInterfaceFactory
     ) {
         $this->_logger = $logger;
         $this->_storeManager = $storeManager;
@@ -126,6 +131,7 @@ class ProcessLogin extends Action
         $this->_lineRepositoryModel = $lineRepositoryModel;
         $this->_customerRepository = $customerRepository;
         $this->_encryptor = $encryptor;
+        $this->_customerInterfaceFactory = $customerInterfaceFactory;
 
         /** parent construct method */
         parent::__construct($context);
@@ -196,7 +202,7 @@ class ProcessLogin extends Action
             // Get Website ID
             $websiteId = $this->_storeManager->getWebsite()->getWebsiteId();
             // Instantiate object (this is the most important part)
-            $customer = $this->_customerFactory->create();
+            $customer = $this->_customerInterfaceFactory->create();
             $customer->setWebsiteId($websiteId);
             $customer->addData(
                 [
@@ -216,7 +222,7 @@ class ProcessLogin extends Action
             try {
                 // Save data
 
-                $passwordHash = $this->_encrypter->getHash($password, true);
+                $passwordHash = $this->_encryptor->getHash($password, true);
                 $this->_customerRepository->save($customer, $passwordHash);
 
                 $search = $this->_customersCollection->create()
