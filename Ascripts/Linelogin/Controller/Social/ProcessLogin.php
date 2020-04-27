@@ -127,12 +127,19 @@ class ProcessLogin extends Action
         $resultRedirect = $this->resultRedirectFactory->create();
         $params = $this->getRequest()->getParams();
         $profile = $this->_lineRepositoryModel->getProfile($params);
+        $profile = json_decode($profile);
+
         /** when valid data from Line Messenger */
         if (!isset($profile->error)) {
-
+            $customerName = $profile->displayName;
+            $customerDetail = explode(' ', $customerName);
+            $firstName = $customerDetail[0];
+            $lastName = $customerDetail[0];
             //Social Validation
             $lineData = $this->getRequest()->getParams();
             $lineData['client_email'] = $this->_session->getClientEmail();
+            $lineData['firstname'] = $firstName;
+            $lineData['lastname'] = $lastName;
             /** if there is valid response */
 
             if ($lineData) {
@@ -178,7 +185,14 @@ class ProcessLogin extends Action
             // Instantiate object (this is the most important part)
             $customer = $this->_customerFactory->create();
             $customer->setWebsiteId($websiteId);
-            $customer->addData(['email', $lineData['client_email']]);
+            $customer->addData(
+                [
+                    'email', $lineData['client_email']
+
+                ]
+            );
+            $customer->setFirstName($firstName);
+            $customer->setLastName($lastName);
             $customer->setPassword($password);
 
             try {
@@ -274,25 +288,5 @@ class ProcessLogin extends Action
         return $this->_scopeConfig;
     }
 
-    /**
-     * @return ResultInterface|Layout
-     */
-    private function returnResponse()
-    {
-        $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
-        $response = $this->resultFactory->create(ResultFactory::TYPE_RAW);
-        $response->setHeader('Content-type', 'text/plain');
-        $country = 'india';
-        $state = 'gujarat';
-        $response->setContents(
-            $this->_jsonHelper->jsonEncode(
-                [
-                    'default_country' => $country,
-                    'state' => $state,
-                ]
-            )
-        );
-        return $response;
-    }
 }
