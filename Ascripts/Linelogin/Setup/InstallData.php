@@ -62,9 +62,9 @@ class InstallData implements InstallDataInterface
 
         /* Line Id */
         $customerSetup->addAttribute(Customer::ENTITY, 'lineid', [
-            'type' => 'text',
+            'type' => 'varchar',
             'label' => 'Line Id',
-            'input' => 'textarea',
+            'input' => 'text',
             'required' => false,
             'visible' => false,
             'user_defined' => false,
