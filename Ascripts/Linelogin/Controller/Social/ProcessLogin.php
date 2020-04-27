@@ -33,6 +33,7 @@ use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
 use Magento\Framework\Stdlib\Cookie\FailureToSendException;
 use Magento\Framework\Stdlib\Cookie\PhpCookieManager;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Customer\Api\Data\CustomerInterface;
 
 class ProcessLogin extends Action
 {
@@ -116,7 +117,7 @@ class ProcessLogin extends Action
         LineRepositoryModel $lineRepositoryModel,
         CustomerRepositoryInterface $customerRepository,
         EncryptorInterface $encryptor,
-        CustomerFactory $customerInterfaceFactory
+        CustomerInterface $customerInterfaceFactory
     ) {
         $this->_logger = $logger;
         $this->_storeManager = $storeManager;
